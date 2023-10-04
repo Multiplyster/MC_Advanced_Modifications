@@ -1,0 +1,7 @@
+main: AdvancedModifications.Main
+name: AdvancedModificationsReloaded
+version: 1.0
+author: Multiplyster
+
+commands:
+  hello:
