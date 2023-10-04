@@ -1,5 +1,5 @@
-main: AdvancedModifications.Main
-name: AdvancedModificationsReloaded
+main: advancedmodifications.Main
+name: AdvModsReloaded
 version: 1.0
 author: Multiplyster
 
