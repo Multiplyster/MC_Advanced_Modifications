@@ -3,7 +3,7 @@ package advancedmodifications.modifications;
 import net.md_5.bungee.api.ChatColor;
 
 public enum ModificationList {
-    ;
+    /* MODS HERE */;
 
     Modification reference;
     private ModificationList(Modification reference) {
@@ -26,7 +26,7 @@ public enum ModificationList {
      */
     public static Modification modFromString(String str, int exactness) {
         if(exactness < 0 || exactness > 3)
-            throw new IllegalArgumentException("Exactness must be between 0 and 3");
+            throw new IllegalArgumentException("Param 'exactness' must be between 0 and 3");
 
         for(ModificationList mod : ModificationList.values()) {
             switch(exactness) {
