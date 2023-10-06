@@ -24,7 +24,7 @@ public enum ModificationList {
      * @param exactness (0-3) Level of exactness
      * @return Mod if found, null if not
      */
-    public Modification modFromString(String str, int exactness) {
+    public static Modification modFromString(String str, int exactness) {
         if(exactness < 0 || exactness > 3)
             throw new IllegalArgumentException("Exactness must be between 0 and 3");
 
