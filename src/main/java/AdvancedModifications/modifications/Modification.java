@@ -13,7 +13,7 @@ public abstract class Modification {
     private String name;
     private ArrayList<String> lore;
     private boolean isShiny;
-    private ItemStack baseItem;
+    private ItemStack[] baseItems;
 
     /**
      * @param name Name of the modification without colors (split on ' ')
@@ -21,22 +21,24 @@ public abstract class Modification {
      * @param isShiny Determines if the modification is glowing or not
      * @param baseItem Display item of modification
      */
-    public Modification(String name, ArrayList<String> lore, boolean isShiny, ItemStack baseItem) {
+    public Modification(String name, ArrayList<String> lore, boolean isShiny, ItemStack[] baseItems) {
         this.name = name;
         this.lore = lore;
         this.isShiny = isShiny;
-        this.baseItem = baseItem;
+        this.baseItems = baseItems;
 
-        ItemMeta meta = baseItem.getItemMeta();
-        meta.setDisplayName(getName());
-        meta.setLore(lore);
+        for(ItemStack baseItem : baseItems) {
+            ItemMeta meta = baseItem.getItemMeta();
+            meta.setDisplayName(getName());
+            meta.setLore(lore);
 
-        if(isShiny){
-            baseItem.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            if(isShiny){
+                baseItem.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            }
+
+            baseItem.setItemMeta(meta);
         }
-
-        baseItem.setItemMeta(meta);
     }
 
     public String getName() {
@@ -56,17 +58,27 @@ public abstract class Modification {
 
     /**
      * Gets the item of the upgrade
+     * @param tier Index for base item (0 based)
      */
-    public ItemStack getBaseItem() {
-        return baseItem;
+    public ItemStack getBaseItem(int tier) {
+        return baseItems[tier];
+    }
+
+    /**
+     * Gets the item of the upgrade
+     */
+    public ItemStack[] getBaseItems() {
+        return baseItems;
     }
 
     public boolean equals(Modification other) {
         if(!name.equalsIgnoreCase(other.getName())) // Name check
             return false;
 
-        if(!baseItem.isSimilar(other.getBaseItem())) // Material, durability, and meta check
-            return false;
+        for(int i = 0; i < baseItems.length; i++){
+            if(!baseItems[i].isSimilar(other.getBaseItem(i))) // Material, durability, and meta check
+                return false;
+        }
 
         if(isShiny != other.isShiny())
             return false;
@@ -77,6 +89,6 @@ public abstract class Modification {
         return name;
     }
 
-    public abstract ItemStack[] getValidAplications();
+    public abstract ItemStack[] getValidApplicableItems();
     public abstract void onEvent(Event event);
 }
