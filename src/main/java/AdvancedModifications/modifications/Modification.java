@@ -3,6 +3,7 @@ package advancedmodifications.modifications;
 import java.util.ArrayList;
 
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -75,4 +76,7 @@ public abstract class Modification {
     public String toString() {
         return name;
     }
+
+    public abstract ItemStack[] getValidAplications();
+    public abstract void onEvent(Event event);
 }
