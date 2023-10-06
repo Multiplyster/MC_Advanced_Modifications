@@ -3,7 +3,6 @@
     - Lore
     - Ability
     - Valid item
-    - Create an enumeration of modifications for identification
 
  - Handle abilities
     - Setup listeners
