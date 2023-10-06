@@ -15,7 +15,11 @@ public enum ModificationList {
     }
 
     /**
-     * 
+     * Exactness:
+     *  - 0: Check beginning, with and without color
+     *  - 1: Same name ignore case, but no color
+     *  - 2: Same name ignore case
+     *  - 3: Same name
      * @param str String to check
      * @param exactness (0-3) Level of exactness
      * @return Mod if found, null if not
@@ -27,7 +31,7 @@ public enum ModificationList {
         for(ModificationList mod : ModificationList.values()) {
             switch(exactness) {
                 case 0:
-                    if(mod.getReference().getName().startsWith(str))
+                    if(mod.getReference().getName().startsWith(str) || ChatColor.stripColor(mod.getReference().getName()).startsWith(str))
                         return mod.getReference();
                     break;
 
