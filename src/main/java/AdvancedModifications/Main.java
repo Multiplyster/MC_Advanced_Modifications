@@ -1,4 +1,4 @@
-package advancedmodifications;
+package AdvancedModifications;
 import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
