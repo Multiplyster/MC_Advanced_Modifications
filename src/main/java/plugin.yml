@@ -2,6 +2,7 @@ main: AdvancedModifications.Main
 name: AdvModificationsReloaded
 version: 1.0
 author: Multiplyster
+api-version: '1.20'
 
 commands:
   hello:

@@ -16,7 +16,7 @@ public class Exoskeleton extends Modification {
     private static final boolean IS_SHINY = false;
     private static final ItemStack[] BASE_ITEMS = {new ItemStack(Material.IRON_LEGGINGS),
                                                    new ItemStack(Material.GOLDEN_LEGGINGS),
-                                                   new ItemStack(Material.DIAMOND_LEGGINGS)};
+                                                   new ItemStack(Material.GOLDEN_LEGGINGS)};
     private static final ItemStack[] APPLICABLE_ITEMS = {new ItemStack(Material.NETHERITE_LEGGINGS)};
 
     public static final Exoskeleton INSTANCE = new Exoskeleton();
