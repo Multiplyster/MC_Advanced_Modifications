@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
 import AdvancedModifications.modifications.Modification;
@@ -31,9 +32,11 @@ public class Exoskeleton extends Modification {
     }
 
     @Override
-    public void onEvent(Event event) {
-        if(event.getEventName().contains("entity")) {
-            System.out.println(event.getEventName());
+    public void onEvent(Event e) {
+        if(e instanceof PlayerMoveEvent) {
+            PlayerMoveEvent event = (PlayerMoveEvent) e;
+
+            System.out.println(event.getPlayer().isSprinting());
         }
     }
 }
