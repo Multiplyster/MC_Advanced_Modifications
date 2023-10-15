@@ -1,4 +1,4 @@
-package advancedmodifications.modifications;
+package AdvancedModifications.modifications;
 
 import java.util.ArrayList;
 import java.util.HashMap;
