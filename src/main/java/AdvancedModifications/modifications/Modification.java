@@ -1,4 +1,4 @@
-package AdvancedModifications.modifications;
+package advancedmodifications.modifications;
 
 import java.util.List;
 

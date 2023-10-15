@@ -1,6 +1,6 @@
-package AdvancedModifications.modifications;
+package advancedmodifications.modifications;
 
-import AdvancedModifications.modifications.mods.Exoskeleton;
+import advancedmodifications.modifications.mods.Exoskeleton;
 
 public enum ModificationList {
     EXOSKELETON(Exoskeleton.INSTANCE)/* MODS HERE */;

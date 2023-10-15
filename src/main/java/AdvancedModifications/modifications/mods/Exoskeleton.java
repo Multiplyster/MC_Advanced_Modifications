@@ -1,4 +1,4 @@
-package AdvancedModifications.modifications.mods;
+package advancedmodifications.modifications.mods;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
-import AdvancedModifications.modifications.Modification;
+import advancedmodifications.modifications.Modification;
 
 public class Exoskeleton extends Modification {
 
