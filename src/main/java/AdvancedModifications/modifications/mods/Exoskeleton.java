@@ -32,7 +32,8 @@ public class Exoskeleton extends Modification {
 
     @Override
     public void onEvent(Event event) {
-        System.out.println(event.getEventName());
+        if(event.getEventName().contains("entity")) {
+            System.out.println(event.getEventName());
+        }
     }
-    
 }

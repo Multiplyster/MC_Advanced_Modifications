@@ -1,19 +1,31 @@
 package AdvancedModifications.modifications;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import org.bukkit.ChatColor;
+import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredListener;
 
-import net.md_5.bungee.api.ChatColor;
+import AdvancedModifications.Main;
 
-public class ModificationManager {
+public class ModificationManager implements Listener {
 
-    private HashMap<HandlerList, ArrayList<Modification>> registeredListeners = new HashMap<HandlerList, ArrayList<Modification>>();
+    public static ModificationManager INSTNACE = new ModificationManager();
 
-    public static void init() {
-        for(ModificationList mod : ModificationList.values()) {
-            
+    public void init() {
+        /* Recieves all events disptached by the server and sends them to the function 'dispatchEvents' */
+        RegisteredListener registeredListener = new RegisteredListener(this, (listener, event) -> onEvent(event), EventPriority.NORMAL, Main.INSTANCE, false);
+        for(HandlerList handler : HandlerList.getHandlerLists()) {
+            handler.register(registeredListener);
+        }
+
+        Main.INSTANCE.logger.info("Initialized modification listener!");
+    }
+
+    public void onEvent(Event e) {
+        for(ModificationList m : ModificationList.values()) {
+            m.getReference().onEvent(e);
         }
     }
 

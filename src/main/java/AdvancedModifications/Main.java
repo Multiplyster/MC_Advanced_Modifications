@@ -5,12 +5,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import AdvancedModifications.modifications.ModificationManager;
+
 public class Main extends JavaPlugin {
 
-    Logger logger = getLogger();
+    public Logger logger = getLogger();
+    public static Main INSTANCE;
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
+        
+        ModificationManager.INSTNACE.init();
+
         logger.info("Enabled!");
     }
 
