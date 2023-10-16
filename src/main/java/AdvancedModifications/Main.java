@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import AdvancedModifications.commands.CommandManager;
 import AdvancedModifications.modifications.ModificationManager;
 
 public class Main extends JavaPlugin {
@@ -17,6 +18,7 @@ public class Main extends JavaPlugin {
         INSTANCE = this;
         
         ModificationManager.INSTNACE.init();
+        CommandManager.INSTANCE.init();
 
         logger.info("Enabled!");
     }
