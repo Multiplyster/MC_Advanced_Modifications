@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import net.md_5.bungee.api.ChatColor;
+
 public abstract class Modification {
 
     private String name;
@@ -17,7 +19,7 @@ public abstract class Modification {
     private Integer tier;
 
     /**
-     * @param name Name of the modification without colors (split on ' ')
+     * @param name Name of the modification with colors
      * @param lore Lore of the item
      * @param isShiny Determines if the modification is glowing or not
      * @param baseItem Display item of modification
@@ -45,8 +47,18 @@ public abstract class Modification {
             tier = 0;
     }
 
+    /**
+     * @return Name of the modification with color
+     */
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return Name of the modification without color
+     */
+    public String getBaseString() {
+        return ChatColor.stripColor(name);
     }
 
     public List<String> getLore() {
