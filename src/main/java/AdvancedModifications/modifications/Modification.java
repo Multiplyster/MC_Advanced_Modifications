@@ -2,30 +2,30 @@ package AdvancedModifications.modifications;
 
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import net.md_5.bungee.api.ChatColor;
-
 public abstract class Modification {
 
-    private String name;
+    private String[] names;
     private List<String> lore;
     private boolean isShiny;
     private ItemStack[] baseItems;
     private Integer tier;
 
     /**
-     * @param name Name of the modification with colors
+     * @param name Name of the modification without color
+     * @param nameColors Colors for name based on tier (split on ' ')
      * @param lore Lore of the item
      * @param isShiny Determines if the modification is glowing or not
      * @param baseItem Display item of modification
      */
-    public Modification(String name, List<String> lore, boolean isShiny, ItemStack[] baseItems) {
-        this.name = name;
+    public Modification(String[] names, List<String> lore, boolean isShiny, ItemStack[] baseItems) {
+        this.names = names;
         this.lore = lore;
         this.isShiny = isShiny;
         this.baseItems = baseItems;
@@ -48,17 +48,13 @@ public abstract class Modification {
     }
 
     /**
-     * @return Name of the modification with color
+     * @return Name of the modification with color based on tier
      */
     public String getName() {
-        return name;
-    }
+        if(tier == null)
+            return names[0];
 
-    /**
-     * @return Name of the modification without color
-     */
-    public String getBaseString() {
-        return ChatColor.stripColor(name);
+        return names[tier];
     }
 
     public List<String> getLore() {
@@ -110,7 +106,7 @@ public abstract class Modification {
     }
 
     public boolean equals(Modification other) {
-        if(!name.equalsIgnoreCase(other.getName())) // Name check
+        if(!getName().equalsIgnoreCase(other.getName())) // Name check
             return false;
 
         for(int i = 0; i < baseItems.length; i++){
@@ -124,7 +120,10 @@ public abstract class Modification {
     }
 
     public String toString() {
-        return name + " MK" + tier;
+        if(tier == null)
+            return getName();
+
+        return getName() + " MK" + tier;
     }
 
     public abstract ItemStack[] getValidApplicableItems();

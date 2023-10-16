@@ -9,10 +9,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
 import AdvancedModifications.modifications.Modification;
+import net.md_5.bungee.api.ChatColor;
 
 public class Exoskeleton extends Modification {
 
-    private static final String NAME = "Exoskeleton";
+    private static final String[] NAME = new String[] {ChatColor.GREEN + "Exoskeleton", ChatColor.YELLOW + "Exoskeleton", ChatColor.GOLD + "Exoskeleton"};
     private static final List<String> LORE = Arrays.asList(new String[] {""});
     private static final boolean IS_SHINY = false;
     private static final ItemStack[] BASE_ITEMS = {new ItemStack(Material.IRON_LEGGINGS),
