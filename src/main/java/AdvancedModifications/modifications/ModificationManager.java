@@ -12,6 +12,7 @@ import AdvancedModifications.Main;
 public class ModificationManager implements Listener {
 
     public static ModificationManager INSTNACE = new ModificationManager();
+    private Thread eventDispatchThread;
 
     public void init() {
         /* Recieves all events disptached by the server and sends them to the function 'dispatchEvents' */
@@ -24,9 +25,18 @@ public class ModificationManager implements Listener {
     }
 
     public void onEvent(Event e) {
-        for(ModificationList m : ModificationList.values()) {
-            m.getReference().onEvent(e);
+        if(eventDispatchThread == null) { /* Initialize thread if null */
+            eventDispatchThread = new Thread("Event Dispatch Thread") {
+                @Override
+                public void run() {
+                    for(ModificationList mod : ModificationList.values()) {
+                        mod.getReference().onEvent(e);
+                    }
+                }
+            };
         }
+
+        eventDispatchThread.start();
     }
 
     /**
