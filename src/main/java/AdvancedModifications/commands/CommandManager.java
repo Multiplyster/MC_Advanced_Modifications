@@ -12,7 +12,7 @@ public class CommandManager implements CommandExecutor {
     public static CommandManager INSTANCE = new CommandManager();
 
     public void init() {
-        Main.getPlugin(Main.class).getCommand(null).setExecutor(INSTANCE);
+        Main.getPlugin(Main.class).getCommand("hello").setExecutor(INSTANCE);
 
         Main.INSTANCE.logger.info("Hooked commands!");
     }
