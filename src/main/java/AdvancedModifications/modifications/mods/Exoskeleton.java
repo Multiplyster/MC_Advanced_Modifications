@@ -37,7 +37,7 @@ public class Exoskeleton extends Modification {
         if(e instanceof PlayerMoveEvent) {
             PlayerMoveEvent event = (PlayerMoveEvent) e;
 
-            System.out.println(event.getPlayer().isSprinting());
+            //System.out.println(event.getPlayer().isSprinting());
         }
     }
 }

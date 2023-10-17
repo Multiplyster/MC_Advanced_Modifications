@@ -9,7 +9,7 @@ import AdvancedModifications.Main;
 
 public class CommandManager implements CommandExecutor {
 
-    public static CommandManager INSTANCE = new CommandManager();
+    public static final CommandManager INSTANCE = new CommandManager();
 
     public void init() {
         Main.getPlugin(Main.class).getCommand("hello").setExecutor(INSTANCE);

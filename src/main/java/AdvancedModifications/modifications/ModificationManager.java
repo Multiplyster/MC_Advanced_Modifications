@@ -11,7 +11,7 @@ import AdvancedModifications.Main;
 
 public class ModificationManager implements Listener {
 
-    public static ModificationManager INSTNACE = new ModificationManager();
+    public static final ModificationManager INSTNACE = new ModificationManager();
 
     public void init() {
         /* Recieves all events disptached by the server and sends them to the function 'dispatchEvents' */
