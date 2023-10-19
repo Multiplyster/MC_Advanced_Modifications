@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import AdvancedModifications.items.modularitems.ModularItem;
+
 public abstract class Modification {
 
     private String[] names;
@@ -125,6 +127,6 @@ public abstract class Modification {
         return getName() + " MK" + tier;
     }
 
-    public abstract ItemStack[] getValidApplicableItems();
+    public abstract ModularItem[] getValidApplicableItems();
     public abstract void onEvent(Event event);
 }

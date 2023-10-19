@@ -8,6 +8,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 
+import AdvancedModifications.items.modularitems.ModularItem;
 import AdvancedModifications.modifications.Modification;
 import net.md_5.bungee.api.ChatColor;
 
@@ -19,7 +20,7 @@ public class Exoskeleton extends Modification {
     private static final ItemStack[] BASE_ITEMS = {new ItemStack(Material.IRON_LEGGINGS),
                                                    new ItemStack(Material.GOLDEN_LEGGINGS),
                                                    new ItemStack(Material.GOLDEN_LEGGINGS)};
-    private static final ItemStack[] APPLICABLE_ITEMS = {new ItemStack(Material.NETHERITE_LEGGINGS)};
+    private static final ModularItem[] APPLICABLE_ITEMS = {};
 
     public static final Exoskeleton INSTANCE = new Exoskeleton();
 
@@ -28,7 +29,7 @@ public class Exoskeleton extends Modification {
     }
 
     @Override
-    public ItemStack[] getValidApplicableItems() {
+    public ModularItem[] getValidApplicableItems() {
         return APPLICABLE_ITEMS;
     }
 
