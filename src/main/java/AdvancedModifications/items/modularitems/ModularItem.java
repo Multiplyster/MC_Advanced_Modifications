@@ -19,19 +19,47 @@ public abstract class ModularItem extends CustomItem {
     
     private List<Modification> appliedModifications = new ArrayList<Modification>();
 
-    public ModularItem(Material material, String name) {
-        super(material, name, new String[] {});
+    public ModularItem(Material material) {
+        super(material);
 
-        /* Fill appliedModifications with 3 nulls */
-        for(int i = 0; i < 3; i++)
-            appliedModifications.add(null);
+        if(appliedModifications.isEmpty()) {
+            for(int i = 0; i < 3; i++){
+                appliedModifications.add(null);
+            }
+        }
+    }
+
+    public ModularItem(Material material, int tier, boolean append) {
+        super(material);
+
+        if(appliedModifications.isEmpty()) {
+            for(int i = 0; i < 3; i++) {
+                appliedModifications.add(null);
+            }
+        }
+
+        ItemMeta meta = getItemMeta();
+        List<String> lore = meta.getLore();
+
+        if(!append)
+            lore.clear();
+
+        lore.add(nameColors[tier] + "Modular" + (new ItemStack(material).getItemMeta().getDisplayName()) + "MKI");
+        lore.add(ChatColor.GRAY + "Available Modification Slots: " + (tier + 1) + "/3");
+
+        for(int i = 1; i <= 3; i++) {
+            if(tier >= i)
+                lore.add(ChatColor.GRAY + "Slot " + i + ": " + ChatColor.ITALIC + "EMPTY");
+            else
+                lore.add(ChatColor.GRAY + "Slot " + i + ": " + ChatColor.ITALIC + "" + ChatColor.RED + "LOCKED");
+        }
     }
 
     /**
      * Upgrades the given item
      * @param item Item to upgrade
      */
-    public static void upgrade(ItemStack item) {
+    public static void upgrade(ItemStack item) { /* Has to be static since we can upgrade a normal piece of netherite */
         if(!item.getType().toString().contains("netherite"))
             return;
 
@@ -127,6 +155,39 @@ public abstract class ModularItem extends CustomItem {
         }
         
         return -1;
+    }
+
+    /**
+     * Checks if the given modification can be applied to this item
+     * @param mod Mod to apply
+     */
+    public boolean canApplyModification(Modification mod) {
+        if(mod == null)
+            return false;
+
+        if(getAvailableSlot() == -1)
+            return false;
+
+        for(ModularItem item : mod.getValidApplicableItems()) {
+            if(this.isSimilar(item)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isSimilar(ModularItem other) {
+        if(this.getType() != other.getType())
+            return false;
+
+        ItemMeta meta = other.getItemMeta();
+        List<String> lore = meta.getLore();
+
+        if(lore.isEmpty())
+            return false;
+
+        return true;
     }
 
     /** Only goes up to 3 */
