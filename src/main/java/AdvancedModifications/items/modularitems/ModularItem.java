@@ -5,19 +5,26 @@ import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import AdvancedModifications.items.util.CustomItem;
+import AdvancedModifications.modifications.Modification;
 
 public abstract class ModularItem extends CustomItem {
 
     public static ChatColor[] nameColors = new ChatColor[] {ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_PURPLE};
 
+    private static final int MAX_SLOTS = 3;
+    
+    private List<Modification> appliedModifications = new ArrayList<Modification>();
+
     public ModularItem(Material material, String name) {
         super(material, name, new String[] {});
+
+        /* Fill appliedModifications with 3 nulls */
+        for(int i = 0; i < 3; i++)
+            appliedModifications.add(null);
     }
 
     /**
@@ -67,6 +74,61 @@ public abstract class ModularItem extends CustomItem {
         return numFromRomanNumeral(firstLine.substring(firstLine.indexOf("MK")));
     }
 
+    public void applyModification(Modification mod) {
+        int slot = getAvailableSlot();
+
+        if(slot == -1)
+            return;
+
+        /* Add mod to list */
+        appliedModifications.set(slot - 2, mod);
+        
+        /* Update meta */
+        ItemMeta meta = getItemMeta();
+        List<String> lore = meta.getLore();
+        lore.set(slot, "Slot " + (slot - 1) + ": " + mod.getName());
+        meta.setLore(lore);
+    }
+
+    public List<Modification> getAppliedModifications() {
+        return appliedModifications;
+    }
+
+    public void removeModification(int slot) {
+        ItemMeta meta = getItemMeta();
+        List<String> lore = meta.getLore();
+        String line = lore.get(slot + 1);
+
+        if(ChatColor.stripColor(line.substring(line.indexOf(": "))).equalsIgnoreCase("Empty"))
+            return;
+
+        /* Remove from list */
+        lore.set(slot - 1, null);
+
+        /* Update meta */
+        lore.set(slot + 1, line.substring(0, line.indexOf(": ") + 2) + ChatColor.ITALIC + "EMPTY");
+        meta.setLore(lore);
+    }
+
+    /**
+     * Gets the first available modification slot for this item
+     * @return Line index of lore (-1 if no slots available)
+     */
+    public int getAvailableSlot() {
+        ItemMeta meta = getItemMeta();
+        List<String> lore = meta.getLore();
+
+        for(int i = 2; i < 2 + MAX_SLOTS; i++) {
+            String line = lore.get(i);
+
+            if(ChatColor.stripColor(line.substring(line.indexOf(": "))).equalsIgnoreCase("Empty")) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+
     /** Only goes up to 3 */
     public static int numFromRomanNumeral(String num) {
         num = num.toLowerCase();
@@ -88,13 +150,4 @@ public abstract class ModularItem extends CustomItem {
             default: return null;
         }
     }
-
-    @Override
-    public abstract ShapedRecipe getRecipe();
-
-    @Override
-    public void onEvent(Event e) {
-        throw new UnsupportedOperationException("Unimplemented method 'onEvent'");
-    }
-    
 }
