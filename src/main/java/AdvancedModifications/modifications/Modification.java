@@ -2,13 +2,12 @@ package AdvancedModifications.modifications;
 
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import AdvancedModifications.items.modularitems.ModularItem;
 
 public abstract class Modification {
 
@@ -127,6 +126,6 @@ public abstract class Modification {
         return getName() + " MK" + tier;
     }
 
-    public abstract ModularItem[] getValidApplicableItems();
+    public abstract Material[] getApplicableItems();
     public abstract void onEvent(Event event);
 }

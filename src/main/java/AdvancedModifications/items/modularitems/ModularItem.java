@@ -166,11 +166,14 @@ public abstract class ModularItem extends CustomItem {
         if(mod == null)
             return false;
 
+        if(!getItemMeta().getLore().get(0).contains("Modular"))
+            return false;
+
         if(getAvailableSlot() == -1)
             return false;
 
-        for(ModularItem item : mod.getValidApplicableItems()) {
-            if(this.isSimilar(item)) {
+        for(Material mat : mod.getApplicableItems()) {
+            if(getType() == mat) {
                 return true;
             }
         }
