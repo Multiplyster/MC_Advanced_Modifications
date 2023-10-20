@@ -84,6 +84,7 @@ public abstract class ModularItem extends CustomItem {
 
         /* Replace first line of old lore with new string */
         lore.set(0, nameColors[tier] + " Modular" + (new ItemStack(item.getType()).getItemMeta().getDisplayName() + "MK" + romanNumerFromInt(tier + 1)));
+        lore.set(tier + 1, ChatColor.GRAY + "Slot " + tier + ": " + ChatColor.ITALIC + "EMPTY");
         meta.setLore(lore);
     }
 
