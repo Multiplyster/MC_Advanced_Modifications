@@ -26,7 +26,7 @@ public class Exoskeleton extends Modification {
     private static final ItemStack[] BASE_ITEMS = {new ItemStack(Material.IRON_LEGGINGS),
                                                    new ItemStack(Material.GOLDEN_LEGGINGS),
                                                    new ItemStack(Material.GOLDEN_LEGGINGS)};
-    private static final ItemStack[] APPLICABLE_ITEMS = {new ItemStack(Material.NETHERITE_LEGGINGS)};
+    private static final ItemStack[] MODULAR_ITEM_TYPES = {};
 
     public static final Exoskeleton INSTANCE = new Exoskeleton();
 
@@ -40,7 +40,7 @@ public class Exoskeleton extends Modification {
 
     @Override
     public ItemStack[] getValidApplicableItems() {
-        return APPLICABLE_ITEMS;
+        return MODULAR_ITEM_TYPES;
     }
 
     @Override

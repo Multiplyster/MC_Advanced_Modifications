@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -58,6 +59,16 @@ public class ItemManager implements Listener {
         /* Check if valid item */
         for(CustomItemList item : CustomItemList.values()) {
             if(meta.getDisplayName().equalsIgnoreCase(item.getReference().getItemMeta().getDisplayName())) {
+                item.getReference().onEvent(e);
+                break;
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        for(CustomItemList item : CustomItemList.values()) {
+            if(e.getView().getTitle().equalsIgnoreCase(item.getReference().getItemMeta().getDisplayName())) {
                 item.getReference().onEvent(e);
                 break;
             }

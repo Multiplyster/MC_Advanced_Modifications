@@ -23,6 +23,10 @@ public abstract class CustomItem extends ItemStack {
         setItemMeta(meta);
     }
 
+    public CustomItem(Material material) {
+        super(material);
+    }
+
     public boolean equal(CustomItem other) {
         if(!other.hasItemMeta())
             return false;
