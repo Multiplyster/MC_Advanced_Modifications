@@ -22,6 +22,8 @@ public class Main extends JavaPlugin {
         CommandManager.INSTANCE.init();
         ItemManager.INSTANCE.init();
 
+        getServer().getPluginManager().registerEvents(GeneralListeners.INSTANCE, INSTANCE);
+
         logger.info("Enabled!");
     }
 
