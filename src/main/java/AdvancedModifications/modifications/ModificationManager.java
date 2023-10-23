@@ -1,10 +1,12 @@
 package AdvancedModifications.modifications;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.RegisteredListener;
 
 import AdvancedModifications.Main;
@@ -18,6 +20,14 @@ public class ModificationManager implements Listener {
         RegisteredListener registeredListener = new RegisteredListener(this, (listener, event) -> dispatchEvents(event), EventPriority.NORMAL, Main.INSTANCE, false);
         for(HandlerList handler : HandlerList.getHandlerLists()) {
             handler.register(registeredListener);
+        }
+
+        for(ModificationList m : ModificationList.values()) {
+            Modification mod = m.getReference();
+            
+            for(ShapedRecipe recipe : mod.getAllRecipes()) {
+                Bukkit.addRecipe(recipe);
+            }
         }
 
         Main.INSTANCE.logger.info("Initialized modification listener!");

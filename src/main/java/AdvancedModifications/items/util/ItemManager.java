@@ -1,6 +1,7 @@
 package AdvancedModifications.items.util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -24,6 +25,10 @@ public class ItemManager implements Listener {
 
         Main.INSTANCE.getServer().getPluginManager().registerEvents(INSTANCE, Main.INSTANCE);
         Main.INSTANCE.logger.info("Registered item listeners");
+    }
+
+    public static void grantAllRecipes(Player player) {
+        
     }
 
     @EventHandler

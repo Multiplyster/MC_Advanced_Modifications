@@ -6,6 +6,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class Modification {
@@ -13,23 +14,22 @@ public abstract class Modification {
     private String[] names;
     private List<String> lore;
     private boolean isShiny;
-    private ItemStack[] baseItems;
+    private ItemStack[] modificationItems;
     private Integer tier;
 
     /**
      * @param name Name of the modification without color
-     * @param nameColors Colors for name based on tier (split on ' ')
      * @param lore Lore of the item
      * @param isShiny Determines if the modification is glowing or not
-     * @param baseItem Display item of modification
+     * @param baseItem Modification
      */
-    public Modification(String[] names, List<String> lore, boolean isShiny, ItemStack[] baseItems) {
+    public Modification(String[] names, List<String> lore, boolean isShiny, ItemStack[] modificationItems) {
         this.names = names;
         this.lore = lore;
         this.isShiny = isShiny;
-        this.baseItems = baseItems;
+        this.modificationItems = modificationItems;
 
-        for(ItemStack baseItem : baseItems) {
+        for(ItemStack baseItem : modificationItems) {
             ItemMeta meta = baseItem.getItemMeta();
             meta.setDisplayName(getName());
             meta.setLore(lore);
@@ -42,8 +42,21 @@ public abstract class Modification {
             baseItem.setItemMeta(meta);
         }
 
-        if(baseItems.length > 1)
+        if(modificationItems.length > 1)
             tier = 0;
+    }
+
+    /**
+     * @param name Name of the modification without color\
+     * @param tier Tier of the item (0 is start)
+     * @param lore Lore of the item
+     * @param isShiny Determines if the modification is glowing or not
+     * @param baseItem Display item of modification
+     */
+    public Modification(String[] names, Integer tier, List<String> lore, boolean isShiny, ItemStack[] baseItems) {
+        this(names, lore, isShiny, baseItems);
+
+        this.tier = tier;
     }
 
     /**
@@ -67,19 +80,12 @@ public abstract class Modification {
         return isShiny;
     }
 
-    /**
-     * Gets the item of the upgrade
-     * @param tier Index for base item (0 based)
-     */
-    public ItemStack getBaseItem(int tier) {
-        return baseItems[tier];
+    public ItemStack getModificationItem() {
+        return modificationItems[tier];
     }
 
-    /**
-     * Gets the item of the upgrade
-     */
-    public ItemStack[] getBaseItems() {
-        return baseItems;
+    public ItemStack[] getAllModificationItems() {
+        return modificationItems;
     }
 
     /**
@@ -94,10 +100,10 @@ public abstract class Modification {
      * @return True if successful, false if unsuccessful
      */
     public boolean upgrade(ItemStack item) {
-        if(baseItems.length == 1)
+        if(modificationItems.length == 1)
             return false;
 
-        if(tier == baseItems.length - 1)
+        if(tier == modificationItems.length - 1)
             return false;
 
         tier++;
@@ -108,8 +114,8 @@ public abstract class Modification {
         if(!getName().equalsIgnoreCase(other.getName())) // Name check
             return false;
 
-        for(int i = 0; i < baseItems.length; i++){
-            if(!baseItems[i].isSimilar(other.getBaseItem(i))) // Material, durability, and meta check
+        for(int i = 0; i < modificationItems.length; i++){
+            if(!modificationItems[i].isSimilar(other.getModificationItem())) // Material, durability, and meta check
                 return false;
         }
 
@@ -122,9 +128,14 @@ public abstract class Modification {
         if(tier == null)
             return getName();
 
-        return getName() + " MK" + tier;
+        return getName() + " MK" + (tier + 1);
+    }
+
+    public ShapedRecipe getRecipe() {
+        return getAllRecipes()[tier];
     }
 
     public abstract ItemStack[] getValidApplicableItems();
+    public abstract ShapedRecipe[] getAllRecipes();
     public abstract void onEvent(Event event);
 }
