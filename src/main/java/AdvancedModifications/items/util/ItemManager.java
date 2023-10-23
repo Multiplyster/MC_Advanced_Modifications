@@ -22,7 +22,7 @@ public class ItemManager implements Listener {
 
         Main.INSTANCE.logger.info("Added all recipes!");
 
-        Main.INSTANCE.getServer().getPluginManager().registerEvents(this, Main.INSTANCE);
+        Main.INSTANCE.getServer().getPluginManager().registerEvents(INSTANCE, Main.INSTANCE);
         Main.INSTANCE.logger.info("Registered item listeners");
     }
 
