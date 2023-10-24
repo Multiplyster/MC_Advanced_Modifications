@@ -55,9 +55,9 @@ public class Exoskeleton extends Modification {
     public ShapedRecipe[] getAllRecipes() {
         ShapedRecipe[] recipes = new ShapedRecipe[3];
 
-        NamespacedKey mk1Key = new NamespacedKey(Main.INSTANCE, ChatColor.stripColor(new Exoskeleton(0).getName()).replaceAll(" ", "_"));
-        NamespacedKey mk2Key = new NamespacedKey(Main.INSTANCE, ChatColor.stripColor(new Exoskeleton(1).getName()).replaceAll(" ", "_"));
-        NamespacedKey mk3Key = new NamespacedKey(Main.INSTANCE, ChatColor.stripColor(new Exoskeleton(2).getName()).replaceAll(" ", "_"));
+        NamespacedKey mk1Key = new NamespacedKey(Main.INSTANCE, ChatColor.stripColor(new Exoskeleton(0).toString()).replaceAll(" ", "_"));
+        NamespacedKey mk2Key = new NamespacedKey(Main.INSTANCE, ChatColor.stripColor(new Exoskeleton(1).toString()).replaceAll(" ", "_"));
+        NamespacedKey mk3Key = new NamespacedKey(Main.INSTANCE, ChatColor.stripColor(new Exoskeleton(2).toString()).replaceAll(" ", "_"));
 
         ShapedRecipe mk1recipe = new ShapedRecipe(mk1Key, new Exoskeleton(0).getModificationItem());
         ShapedRecipe mk2recipe = new ShapedRecipe(mk2Key, new Exoskeleton(1).getModificationItem());
@@ -65,25 +65,35 @@ public class Exoskeleton extends Modification {
 
         mk1recipe.shape("sls", "rnr", "sls");
         mk2recipe.shape(" s ", "lel", " s ");
+        mk3recipe.shape(" s ", "lel", " s ");
 
         ItemStack speed1Pot = new ItemStack(Material.POTION);
         PotionMeta speed1Meta = (PotionMeta) speed1Pot.getItemMeta();
         speed1Meta.setBasePotionData(new PotionData(PotionType.SPEED, false, false));
         speed1Pot.setItemMeta(speed1Meta);
 
-        ItemStack speed2Pot = new ItemStack(Material.POTION);
-        PotionMeta speed2Meta = (PotionMeta) speed2Pot.getItemMeta();
-        speed2Meta.setBasePotionData(new PotionData(PotionType.SPEED, false, true));
-        speed2Pot.setItemMeta(speed2Meta);
+        ItemStack extendedSpeedPot = new ItemStack(Material.POTION);
+        PotionMeta extendedSpeedMeta = (PotionMeta) extendedSpeedPot.getItemMeta();
+        extendedSpeedMeta.setBasePotionData(new PotionData(PotionType.SPEED, true, false));
+        extendedSpeedPot.setItemMeta(extendedSpeedMeta);
+
+        ItemStack upgradedSpeedPot = new ItemStack(Material.POTION);
+        PotionMeta upgradedSpeedMeta = (PotionMeta) extendedSpeedPot.getItemMeta();
+        extendedSpeedMeta.setBasePotionData(new PotionData(PotionType.SPEED, false, true));
+        extendedSpeedPot.setItemMeta(upgradedSpeedMeta);
 
         mk1recipe.setIngredient('s', new RecipeChoice.ExactChoice(speed1Pot));
         mk1recipe.setIngredient('l', Material.IRON_LEGGINGS);
         mk1recipe.setIngredient('r', Material.REDSTONE);
         mk1recipe.setIngredient('n', Material.NETHERITE_SCRAP);
 
-        mk2recipe.setIngredient('s', new RecipeChoice.ExactChoice(speed2Pot));
+        mk2recipe.setIngredient('s', new RecipeChoice.ExactChoice(extendedSpeedPot));
         mk2recipe.setIngredient('l', Material.GOLDEN_LEGGINGS);
         mk2recipe.setIngredient('e', new RecipeChoice.ExactChoice(new Exoskeleton(0).getModificationItem()));
+
+        mk3recipe.setIngredient('s', new RecipeChoice.ExactChoice(upgradedSpeedPot));
+        mk3recipe.setIngredient('l', Material.DIAMOND_LEGGINGS);
+        mk3recipe.setIngredient('e', new RecipeChoice.ExactChoice(new Exoskeleton(1).getModificationItem()));
 
         recipes[0] = mk1recipe;
         recipes[1] = mk2recipe;

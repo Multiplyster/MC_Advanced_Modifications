@@ -115,7 +115,7 @@ public abstract class ModularItem extends CustomItem {
         /* Update meta */
         ItemMeta meta = getItemMeta();
         List<String> lore = meta.getLore();
-        lore.set(slot, "Slot " + (slot - 1) + ": " + mod.getName());
+        lore.set(slot, "Slot " + (slot - 1) + ": " + mod.getBaseName());
         meta.setLore(lore);
     }
 

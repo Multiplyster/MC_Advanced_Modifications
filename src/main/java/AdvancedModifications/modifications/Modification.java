@@ -31,7 +31,7 @@ public abstract class Modification {
 
         for(ItemStack baseItem : modificationItems) {
             ItemMeta meta = baseItem.getItemMeta();
-            meta.setDisplayName(getName());
+            meta.setDisplayName(getBaseName());
             meta.setLore(lore);
 
             if(isShiny){
@@ -62,7 +62,7 @@ public abstract class Modification {
     /**
      * @return Name of the modification with color based on tier
      */
-    public String getName() {
+    public String getBaseName() {
         if(tier == null)
             return names[0];
 
@@ -111,7 +111,7 @@ public abstract class Modification {
     }
 
     public boolean equals(Modification other) {
-        if(!getName().equalsIgnoreCase(other.getName())) // Name check
+        if(!getBaseName().equalsIgnoreCase(other.getBaseName())) // Name check
             return false;
 
         for(int i = 0; i < modificationItems.length; i++){
@@ -126,9 +126,9 @@ public abstract class Modification {
 
     public String toString() {
         if(tier == null)
-            return getName();
+            return getBaseName();
 
-        return getName() + " MK" + (tier + 1);
+        return getBaseName() + " MK" + (tier + 1);
     }
 
     public ShapedRecipe getRecipe() {

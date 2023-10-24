@@ -56,22 +56,22 @@ public class ModificationManager implements Listener {
         for(ModificationList mod : ModificationList.values()) {
             switch(exactness) {
                 case 0:
-                    if(mod.getReference().getName().startsWith(str) || ChatColor.stripColor(mod.getReference().getName()).startsWith(str))
+                    if(mod.getReference().getBaseName().startsWith(str) || ChatColor.stripColor(mod.getReference().getBaseName()).startsWith(str))
                         return mod.getReference();
                     break;
 
                 case 1:
-                    if(ChatColor.stripColor(mod.getReference().getName()).equalsIgnoreCase(str))
+                    if(ChatColor.stripColor(mod.getReference().getBaseName()).equalsIgnoreCase(str))
                         return mod.getReference();
                     break;
 
                 case 2:
-                    if(mod.getReference().getName().equalsIgnoreCase(str))
+                    if(mod.getReference().getBaseName().equalsIgnoreCase(str))
                         return mod.getReference();
                     break;
 
                 case 3:
-                    if(mod.getReference().getName().equals(str))
+                    if(mod.getReference().getBaseName().equals(str))
                         return mod.getReference();
                     break;
             }
