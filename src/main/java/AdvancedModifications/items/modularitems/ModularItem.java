@@ -15,7 +15,7 @@ public abstract class ModularItem extends CustomItem {
 
     public static ChatColor[] nameColors = new ChatColor[] {ChatColor.BLUE, ChatColor.GOLD, ChatColor.DARK_PURPLE};
 
-    private static final int MAX_SLOTS = 3;
+    public static final int MAX_SLOTS = 3;
     private static final int[] SLOTS_PER_TIER = {1, 2, 3};
     
     private List<Modification> appliedModifications = new ArrayList<Modification>();
@@ -67,6 +67,10 @@ public abstract class ModularItem extends CustomItem {
 
         meta.setLore(lore);
         this.setItemMeta(meta);
+    }
+
+    public int[] getSlotsPerTier() {
+        return SLOTS_PER_TIER;
     }
 
     /**
