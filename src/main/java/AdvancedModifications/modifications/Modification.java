@@ -29,21 +29,27 @@ public abstract class Modification {
         this.isShiny = isShiny;
         this.modificationItems = modificationItems;
 
-        for(ItemStack baseItem : modificationItems) {
+        if(modificationItems.length > 1)
+            tier = 0;
+
+        Integer baseTier = tier;
+        for(int i = 0; i < modificationItems.length; i++) {
+            ItemStack baseItem = modificationItems[i];
             ItemMeta meta = baseItem.getItemMeta();
-            meta.setDisplayName(getBaseName());
+
+            if(tier != null)
+                tier = i;
+
+            meta.setDisplayName(toString());
             meta.setLore(lore);
 
-            if(isShiny){
-                baseItem.addUnsafeEnchantment(Enchantment.DURABILITY, 0);
-                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            }
+            if(isShiny)
+                meta.addEnchant(Enchantment.DURABILITY, 1, true);
 
             baseItem.setItemMeta(meta);
         }
 
-        if(modificationItems.length > 1)
-            tier = 0;
+        tier = baseTier;
     }
 
     /**
