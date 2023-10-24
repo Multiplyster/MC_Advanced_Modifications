@@ -2,7 +2,6 @@ package AdvancedModifications.modifications;
 
 import java.util.List;
 
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemFlag;
