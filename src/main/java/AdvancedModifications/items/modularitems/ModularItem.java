@@ -13,9 +13,10 @@ import AdvancedModifications.modifications.Modification;
 
 public abstract class ModularItem extends CustomItem {
 
-    public static ChatColor[] nameColors = new ChatColor[] {ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_PURPLE};
+    public static ChatColor[] nameColors = new ChatColor[] {ChatColor.BLUE, ChatColor.GOLD, ChatColor.DARK_PURPLE};
 
     private static final int MAX_SLOTS = 3;
+    private static final int[] SLOTS_PER_TIER = {1, 2, 3};
     
     private List<Modification> appliedModifications = new ArrayList<Modification>();
 
@@ -23,36 +24,49 @@ public abstract class ModularItem extends CustomItem {
         super(material);
 
         if(appliedModifications.isEmpty()) {
-            for(int i = 0; i < 3; i++){
-                appliedModifications.add(null);
-            }
-        }
-    }
-
-    public ModularItem(Material material, int tier, boolean append) {
-        super(material);
-
-        if(appliedModifications.isEmpty()) {
-            for(int i = 0; i < 3; i++) {
+            for(int i = 0; i < MAX_SLOTS; i++) {
                 appliedModifications.add(null);
             }
         }
 
         ItemMeta meta = getItemMeta();
-        List<String> lore = meta.getLore();
+        List<String> lore = new ArrayList<String>();
 
-        if(!append)
-            lore.clear();
+        lore.add(nameColors[0] + "Modular" + (new ItemStack(material).getItemMeta().getDisplayName()) + "MKI");
+        lore.add(ChatColor.GRAY + "Available Modification Slots: 1/3");
+
+        lore.add(ChatColor.GRAY + "Slot 1: " + ChatColor.ITALIC + "EMPTY");
+        lore.add(ChatColor.GRAY + "Slot 2: " + ChatColor.ITALIC + "" + ChatColor.RED + "LOCKED");
+        lore.add(ChatColor.GRAY + "Slot 3: " + ChatColor.ITALIC + "" + ChatColor.RED + "LOCKED");
+
+        meta.setLore(lore);
+        this.setItemMeta(meta);
+    }
+
+    public ModularItem(Material material, int tier) {
+        super(material);
+
+        if(appliedModifications.isEmpty()) {
+            for(int i = 0; i < MAX_SLOTS; i++) {
+                appliedModifications.add(null);
+            }
+        }
+
+        ItemMeta meta = getItemMeta();
+        List<String> lore = new ArrayList<String>();
 
         lore.add(nameColors[tier] + "Modular" + (new ItemStack(material).getItemMeta().getDisplayName()) + "MKI");
         lore.add(ChatColor.GRAY + "Available Modification Slots: " + (tier + 1) + "/3");
 
-        for(int i = 1; i <= 3; i++) {
-            if(tier >= i)
+        for(int i = 1; i <= MAX_SLOTS; i++) {
+            if(SLOTS_PER_TIER[tier] >= i)
                 lore.add(ChatColor.GRAY + "Slot " + i + ": " + ChatColor.ITALIC + "EMPTY");
             else
                 lore.add(ChatColor.GRAY + "Slot " + i + ": " + ChatColor.ITALIC + "" + ChatColor.RED + "LOCKED");
         }
+
+        meta.setLore(lore);
+        this.setItemMeta(meta);
     }
 
     /**
@@ -83,7 +97,7 @@ public abstract class ModularItem extends CustomItem {
         int tier = i.getTier();
 
         /* Replace first line of old lore with new string */
-        lore.set(0, nameColors[tier] + " Modular" + (new ItemStack(item.getType()).getItemMeta().getDisplayName() + "MK" + romanNumerFromInt(tier + 1)));
+        lore.set(0, nameColors[tier] + " Modular" + (new ItemStack(item.getType()).getItemMeta().getDisplayName() + "MK" + romanNumeralFromInt(tier + 1)));
         lore.set(tier + 1, ChatColor.GRAY + "Slot " + tier + ": " + ChatColor.ITALIC + "EMPTY");
         meta.setLore(lore);
     }
@@ -207,12 +221,31 @@ public abstract class ModularItem extends CustomItem {
     }
 
     /** Only goes up to 3 */
-    public static String romanNumerFromInt(int num) {
+    public static String romanNumeralFromInt(int num) {
         switch(num) {
             case 1: return "I";
             case 2: return "II";
             case 3: return "III";
             default: return null;
         }
+    }
+
+    /**
+     * Determines if the given item is a modular item
+     * @param item Item to check
+     */
+    public static boolean isModularItem(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if(meta == null)
+            return false;
+
+        List<String> lore = meta.getLore();
+        if(lore == null || lore.isEmpty())
+            return false;
+
+        if(!ChatColor.stripColor(lore.get(0)).contains("Modular"))
+            return false;
+
+        return true;
     }
 }
