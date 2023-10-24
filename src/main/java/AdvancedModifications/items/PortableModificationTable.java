@@ -1,5 +1,6 @@
 package AdvancedModifications.items;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -53,7 +54,7 @@ public class PortableModificationTable extends CustomItem {
         exitItem = new ItemStack(Material.BARRIER);
         ItemMeta exitMeta = exitItem.getItemMeta();
         exitMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Exit");
-        List<String> exitLore = exitMeta.getLore();
+        List<String> exitLore = new ArrayList<String>();
         exitLore.add(ChatColor.GRAY + "Click to exit!");
         exitMeta.setLore(exitLore);
 
@@ -61,7 +62,7 @@ public class PortableModificationTable extends CustomItem {
         lockedSlotItem = new ItemStack(Material.IRON_BARS);
         ItemMeta lockedSlotMeta = lockedSlotItem.getItemMeta();
         lockedSlotMeta.setDisplayName(ChatColor.RED + "Unavailable modification slot!");
-        List<String> lockedSlotLore = lockedSlotMeta.getLore();
+        List<String> lockedSlotLore = new ArrayList<String>();
         lockedSlotLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "This slot is unavailable to modify! Try");
         lockedSlotLore.add(ChatColor.GRAY + "" + ChatColor.ITALIC + "upgrading your armor to unlcok more slots!");
         lockedSlotMeta.setLore(lockedSlotLore);
@@ -70,9 +71,8 @@ public class PortableModificationTable extends CustomItem {
         upgradeItemItem = new ItemStack(Material.GREEN_CONCRETE);
         ItemMeta upgradeArmorMeta = upgradeItemItem.getItemMeta();
         upgradeArmorMeta.setDisplayName(ChatColor.DARK_GREEN + "Click to upgrade!");
-        List<String> upgradeArmorLore = upgradeArmorMeta.getLore();
+        List<String> upgradeArmorLore = new ArrayList<String>();
         upgradeArmorLore.add(ChatColor.GRAY + "Upgrading your armor will take");
-        
     }
 
     @Override
