@@ -1,1 +1,0 @@
- - Might move event listeners to modular items themselves and call a function in the modification to run the effect
