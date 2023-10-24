@@ -172,8 +172,8 @@ public abstract class ModularItem extends CustomItem {
         if(getAvailableSlot() == -1)
             return false;
 
-        for(Material mat : mod.getApplicableItems()) {
-            if(getType() == mat) {
+        for(ItemStack item : mod.getValidApplicableItems()) {
+            if(getType() == item.getType()) {
                 return true;
             }
         }
