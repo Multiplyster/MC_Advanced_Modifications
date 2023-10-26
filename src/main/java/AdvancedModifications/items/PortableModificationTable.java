@@ -18,6 +18,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import AdvancedModifications.Main;
+import AdvancedModifications.items.modularitems.ModularItem;
 import AdvancedModifications.items.util.CustomItem;
 
 public class PortableModificationTable extends CustomItem {
@@ -33,7 +34,7 @@ public class PortableModificationTable extends CustomItem {
     private static final int ITEM_SLOT = (9 * 1) + 1;
     private static final int ITEM_UPGRADE_SLOT =  (9 * 3) + 1;
     private static final int MODIFICATION_SLOT_OFFSET = (9 * 1) + 6;
-    private static final int EXIT_ITEM_SLOT = 9 * 7 - 1;
+    private static final int EXIT_ITEM_SLOT = 9 * 6 - 1;
 
     /* Netherite -> Modular item mki */
     private static ItemStack[] t1UpgradeMaterials = new ItemStack[] {new ItemStack(Material.NETHERITE_INGOT, 1), new ItemStack(Material.DIAMOND, 5)};
@@ -94,7 +95,7 @@ public class PortableModificationTable extends CustomItem {
             PlayerInteractEvent event = (PlayerInteractEvent) e;
             Player player = event.getPlayer();
 
-            player.openInventory(getInventory(player));
+            player.openInventory(getInventory());
             player.playSound(player, Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
         } else if(e instanceof InventoryClickEvent) {
             InventoryClickEvent event = (InventoryClickEvent) e;
@@ -116,12 +117,8 @@ public class PortableModificationTable extends CustomItem {
         }
     }
 
-    private static void refreshInventory(Inventory prev, Player player) {
-        
-    }
-
-    public Inventory getInventory(Player player) {
-        Inventory inv = Bukkit.createInventory(player, 9 * 7, NAME);
+    public Inventory getInventory() {
+        Inventory inv = Bukkit.createInventory(null, 9 * 6, NAME);
 
         /* Set contents to gray glass pane */
         for(int i = 0; i < inv.getSize(); i++) {
@@ -132,8 +129,9 @@ public class PortableModificationTable extends CustomItem {
         inv.setItem(ITEM_SLOT, null);
         inv.setItem(ITEM_UPGRADE_SLOT, upgradeItemItem);
 
-        for(int i = 0; i < 3; i++) {
-            inv.setItem(MODIFICATION_SLOT_OFFSET + (18 * i), null);
+        /* Empty modification slots */
+        for(int i = 0; i < ModularItem.MAX_SLOTS; i++) {
+            inv.setItem(MODIFICATION_SLOT_OFFSET + (18 * i), lockedSlotItem);
         }
 
         return inv;
