@@ -10,8 +10,10 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -94,6 +96,12 @@ public class PortableModificationTable extends CustomItem {
         if(e instanceof PlayerInteractEvent) {
             PlayerInteractEvent event = (PlayerInteractEvent) e;
             Player player = event.getPlayer();
+
+            if(event.getHand() == EquipmentSlot.OFF_HAND)
+                return;
+
+            if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+                return;
 
             player.openInventory(getInventory());
             player.playSound(player, Sound.BLOCK_ENDER_CHEST_OPEN, 1, 1);
